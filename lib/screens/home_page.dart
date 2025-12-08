@@ -290,17 +290,22 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Learning Categories',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey[800],
-                              fontFamily: 'ComicNeue',
+                          Expanded(
+                            child: Text(
+                              'Learning Categories',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[800],
+                                fontFamily: 'ComicNeue',
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
+                          const SizedBox(width: 12),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [Color(0xFFFFD166), Color(0xFFFFB347)],
@@ -310,10 +315,10 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              '6 Categories',
+                              '6 Cats',
                               style: TextStyle(
                                 color: Colors.grey[800],
-                                fontSize: 12,
+                                fontSize: 11,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -483,13 +488,13 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
                     
                     // Content
                     Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            padding: const EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.2),
                               shape: BoxShape.circle,
@@ -497,32 +502,33 @@ class _HomePageState extends ConsumerState<HomePage> with SingleTickerProviderSt
                             child: Icon(
                               category['icon'] as IconData,
                               color: Colors.white,
-                              size: 24,
+                              size: 18,
                             ),
                           ),
-                          
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                category['title'] as String,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  fontFamily: 'ComicNeue',
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                '${category['lessonCount']} Lessons',
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
+                          const Spacer(),
+                          Text(
+                            category['title'] as String,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              fontFamily: 'ComicNeue',
+                              height: 1.0,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 1),
+                          Text(
+                            '${category['lessonCount']} L',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: 9,
+                              fontWeight: FontWeight.w400,
+                              height: 1.0,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
                           ),
                         ],
                       ),

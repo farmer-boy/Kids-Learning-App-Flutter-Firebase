@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sdk_setup/features/auth/domain/auth_controller.dart';
 import 'package:sdk_setup/core/constants/validators.dart';
 import 'package:sdk_setup/core/theme/app_colors.dart';
-import 'package:sdk_setup/features/auth/presentation/splash_screen.dart';
 // import 'package:sdk_setup/features/auth/data/auth_repository.dart'; // Verify this
 import 'widgets/custom_button.dart';
 import 'signup_screen.dart';

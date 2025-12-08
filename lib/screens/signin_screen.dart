@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../features/auth/data/auth_repository.dart';
 import 'main_app_screen.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
@@ -22,8 +23,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> with SingleTickerPr
   @override
   void initState() {
     super.initState();
-    _emailController.text = 'junaid@gmail.com';
-    _passwordController.text = '123456Ja';
+    // Prefill demo account
+    _emailController.text = 'farhan@gmail.com';
+    _passwordController.text = '123456';
     
     _animationController = AnimationController(
       vsync: this,
@@ -46,7 +48,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> with SingleTickerPr
     super.dispose();
   }
 
-  void _handleSignInSuccess(BuildContext context) {
+  void _handleSignInSuccess(BuildContext context, {String? name, String? email}) {
     showGeneralDialog(
       context: context,
       barrierDismissible: false,
@@ -101,15 +103,26 @@ class _SignInScreenState extends ConsumerState<SignInScreen> with SingleTickerPr
                       ),
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'Welcome Back!',
-                      style: TextStyle(
+                    Text(
+                      'Welcome back ${name ?? ''}',
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 8),
+                    if (email != null && email.isNotEmpty) ...[
+                      Text(
+                        email,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.white70,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                    ],
                     const Text(
                       'Ready to continue learning?',
                       style: TextStyle(
@@ -164,12 +177,14 @@ class _SignInScreenState extends ConsumerState<SignInScreen> with SingleTickerPr
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
-
-    await Future.delayed(const Duration(seconds: 2));
-
-    if (_emailController.text == 'junaid@gmail.com' && _passwordController.text == '123456Ja') {
-      _handleSignInSuccess(context);
-    } else {
+    final authRepo = ref.read(authRepositoryProvider);
+    try {
+      final user = await authRepo.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
+      _handleSignInSuccess(context, name: user.name, email: user.email);
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -183,7 +198,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> with SingleTickerPr
                 child: const Icon(Icons.error, color: Colors.red, size: 20),
               ),
               const SizedBox(width: 10),
-              const Text('Invalid email or password'),
+              Flexible(child: Text(e.toString())),
             ],
           ),
           backgroundColor: Colors.red,
@@ -191,8 +206,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> with SingleTickerPr
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         ),
       );
+    } finally {
+      setState(() => _isLoading = false);
     }
-    setState(() => _isLoading = false);
   }
 
   @override

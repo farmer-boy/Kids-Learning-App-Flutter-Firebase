@@ -92,10 +92,16 @@ class CategoryContentScreen extends StatelessWidget {
           'Lesson $lessonNumber: ${_getLessonTitle(lessonNumber)}',
           style: const TextStyle(
             fontWeight: FontWeight.w600,
-            fontSize: 16,
+            fontSize: 15,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
-        subtitle: Text(_getLessonDescription(lessonNumber)),
+        subtitle: Text(
+          _getLessonDescription(lessonNumber),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         trailing: const Icon(Icons.play_circle_fill, color: Colors.green, size: 30),
         onTap: () {
           _startLesson(context, lessonNumber);

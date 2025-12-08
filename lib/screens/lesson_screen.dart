@@ -323,8 +323,9 @@ class _LessonScreenState extends State<LessonScreen> with SingleTickerProviderSt
       scale: _scaleAnimation,
       child: Container(
         padding: const EdgeInsets.all(30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Color Mixing Magic! 🎨',
@@ -402,6 +403,7 @@ class _LessonScreenState extends State<LessonScreen> with SingleTickerProviderSt
             ),
           ],
         ),
+        ),
       ),
     );
   }
@@ -442,8 +444,9 @@ class _LessonScreenState extends State<LessonScreen> with SingleTickerProviderSt
       scale: _scaleAnimation,
       child: Container(
         padding: const EdgeInsets.all(30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (emoji != null) ...[
               Text(
@@ -531,6 +534,7 @@ class _LessonScreenState extends State<LessonScreen> with SingleTickerProviderSt
                 ),
               ),
           ],
+        ),
         ),
       ),
     );

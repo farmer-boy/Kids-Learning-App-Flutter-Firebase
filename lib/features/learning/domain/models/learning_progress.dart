@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class LearningProgress {
   final String id;
   final String childId;
@@ -35,9 +33,13 @@ class LearningProgress {
       timeSpent: json['timeSpent'] as int? ?? 0,
       isCompleted: json['isCompleted'] as bool? ?? false,
       achievements: json['achievements'] as Map<String, dynamic>? ?? {},
-      startedAt: (json['startedAt'] as Timestamp).toDate(),
+      startedAt: json['startedAt'] is DateTime
+          ? json['startedAt'] as DateTime
+          : DateTime.parse(json['startedAt'] as String),
       completedAt: json['completedAt'] != null
-          ? (json['completedAt'] as Timestamp).toDate()
+          ? json['completedAt'] is DateTime
+              ? json['completedAt'] as DateTime
+              : DateTime.parse(json['completedAt'] as String)
           : null,
       metadata: json['metadata'] as Map<String, dynamic>? ?? {},
     );
@@ -52,9 +54,9 @@ class LearningProgress {
       'timeSpent': timeSpent,
       'isCompleted': isCompleted,
       'achievements': achievements,
-      'startedAt': Timestamp.fromDate(startedAt),
+      'startedAt': startedAt.toIso8601String(),
       'completedAt':
-          completedAt != null ? Timestamp.fromDate(completedAt!) : null,
+          completedAt != null ? completedAt!.toIso8601String() : null,
       'metadata': metadata,
     };
   }

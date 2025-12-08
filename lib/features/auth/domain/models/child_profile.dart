@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 enum ChildGender { male, female, other }
 
 class ChildProfile {
@@ -42,7 +40,9 @@ class ChildProfile {
       unlockedAchievements:
           List<String>.from(json['unlockedAchievements'] as List),
       dailyPlayTimeLimit: json['dailyPlayTimeLimit'] as int? ?? 60,
-      lastActive: (json['lastActive'] as Timestamp).toDate(),
+      lastActive: json['lastActive'] is DateTime
+          ? json['lastActive'] as DateTime
+          : DateTime.parse(json['lastActive'] as String),
     );
   }
 
@@ -58,7 +58,7 @@ class ChildProfile {
       'totalStars': totalStars,
       'unlockedAchievements': unlockedAchievements,
       'dailyPlayTimeLimit': dailyPlayTimeLimit,
-      'lastActive': Timestamp.fromDate(lastActive),
+      'lastActive': lastActive.toIso8601String(),
     };
   }
 

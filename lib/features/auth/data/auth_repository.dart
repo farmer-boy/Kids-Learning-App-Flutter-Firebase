@@ -24,6 +24,10 @@ class AuthRepository {
   final Map<String, String> _names = {};
 
   AuthRepository() {
+    // Seed a test user so the demo account works immediately
+    _passwords['farhan@gmail.com'] = '123456';
+    _uids['farhan@gmail.com'] = 'temp-uid-farhan';
+    _names['farhan@gmail.com'] = 'Farhan';
     _authStateController.add(null);
   }
 

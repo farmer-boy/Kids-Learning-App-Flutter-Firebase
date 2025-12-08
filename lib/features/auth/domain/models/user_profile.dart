@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserProfile {
   final String id;
   final String email;
@@ -29,8 +27,12 @@ class UserProfile {
       photoUrl: json['photoUrl'] as String?,
       childrenIds: List<String>.from(json['childrenIds'] as List),
       isPremium: json['isPremium'] as bool? ?? false,
-      createdAt: (json['createdAt'] as Timestamp).toDate(),
-      lastLoginAt: (json['lastLoginAt'] as Timestamp).toDate(),
+      createdAt: json['createdAt'] is DateTime
+          ? json['createdAt'] as DateTime
+          : DateTime.parse(json['createdAt'] as String),
+      lastLoginAt: json['lastLoginAt'] is DateTime
+          ? json['lastLoginAt'] as DateTime
+          : DateTime.parse(json['lastLoginAt'] as String),
     );
   }
 
@@ -42,8 +44,8 @@ class UserProfile {
       'photoUrl': photoUrl,
       'childrenIds': childrenIds,
       'isPremium': isPremium,
-      'createdAt': Timestamp.fromDate(createdAt),
-      'lastLoginAt': Timestamp.fromDate(lastLoginAt),
+      'createdAt': createdAt.toIso8601String(),
+      'lastLoginAt': lastLoginAt.toIso8601String(),
     };
   }
 

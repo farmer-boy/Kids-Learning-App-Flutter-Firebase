@@ -6,6 +6,13 @@ class RewardsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final padding = (width * 0.04).clamp(12.0, 28.0);
+    final cardPadding = (width * 0.05).clamp(12.0, 28.0);
+    final iconSize = (width * 0.08).clamp(20.0, 48.0);
+    final largeNumberSize = (width * 0.09).clamp(20.0, 40.0);
+    final labelSize = (width * 0.045).clamp(12.0, 20.0);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Rewards'),
@@ -13,13 +20,13 @@ class RewardsPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(padding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Stars & Level Card
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(cardPadding),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -34,41 +41,43 @@ class RewardsPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Total Stars',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AppColors.primaryDark.withOpacity(0.8),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total Stars',
+                            style: TextStyle(
+                              fontSize: labelSize,
+                              color: AppColors.primaryDark.withOpacity(0.8),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: AppColors.primaryDark,
-                              size: 32,
-                            ),
-                            const SizedBox(width: 8),
-                            Text(
-                              '250',
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
+                          SizedBox(height: padding * 0.25),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.star,
                                 color: AppColors.primaryDark,
+                                size: iconSize,
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              SizedBox(width: padding * 0.3),
+                              Text(
+                                '250',
+                                style: TextStyle(
+                                  fontSize: largeNumberSize,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primaryDark,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: padding * 0.9,
+                        vertical: padding * 0.4,
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.primaryDark,
@@ -77,7 +86,7 @@ class RewardsPage extends StatelessWidget {
                       child: Text(
                         'Level 5',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: (labelSize * 1.0),
                           fontWeight: FontWeight.bold,
                           color: AppColors.primaryGold,
                         ),
@@ -86,22 +95,22 @@ class RewardsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: padding),
 
               // Recent Achievements
               Text(
                 'Recent Achievements',
-                style: Theme.of(context).textTheme.headlineMedium,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: (width < 420 ? 18 : 22)),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: padding * 0.6),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 5,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    padding: const EdgeInsets.all(16),
+                    margin: EdgeInsets.only(bottom: padding * 0.6),
+                    padding: EdgeInsets.all(cardPadding * 0.6),
                     decoration: BoxDecoration(
                       color: AppColors.surface,
                       borderRadius: BorderRadius.circular(16),
@@ -112,7 +121,7 @@ class RewardsPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(12),
+                          padding: EdgeInsets.all(cardPadding * 0.18),
                           decoration: BoxDecoration(
                             color: AppColors.primaryGold.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12),
@@ -120,32 +129,34 @@ class RewardsPage extends StatelessWidget {
                           child: Icon(
                             Icons.emoji_events,
                             color: AppColors.primaryGold,
-                            size: 32,
+                            size: (iconSize * 0.95).clamp(18.0, 40.0),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: padding * 0.6),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Achievement ${index + 1}',
-                                style: const TextStyle(
-                                  fontSize: 18,
+                                style: TextStyle(
+                                  fontSize: (width < 420 ? 14 : 16),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              SizedBox(height: 4),
                               Text(
                                 'Completed 5 lessons in a row',
                                 style: TextStyle(
                                   color: Colors.white.withOpacity(0.7),
+                                  fontSize: (width < 420 ? 12 : 14),
                                 ),
                               ),
                             ],
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: EdgeInsets.all(cardPadding * 0.18),
                           decoration: BoxDecoration(
                             color: AppColors.primaryGold.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
@@ -155,6 +166,7 @@ class RewardsPage extends StatelessWidget {
                             style: TextStyle(
                               color: AppColors.primaryGold,
                               fontWeight: FontWeight.bold,
+                              fontSize: (width < 420 ? 12 : 14),
                             ),
                           ),
                         ),

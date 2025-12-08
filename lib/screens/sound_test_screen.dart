@@ -35,7 +35,7 @@ class SoundTestScreen extends StatelessWidget {
             }),
             
             _buildSoundButton('Play Count Sound', () {
-              SoundService.playCountSound(3);
+              SoundService.playNumberSound(3);
             }),
             
             _buildSoundButton('Play Color Sound', () {
